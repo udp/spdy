@@ -11,6 +11,30 @@ ANSI C, BSD licensed, requires zlib.
 
 [![Build Status](https://secure.travis-ci.org/udp/spdy.png)](http://travis-ci.org/udp/spdy)
 
+
+Usage
+=====
+
+For a description of each function/callback, refer to the comments in `spdy.h`.
+
+* Each connection should be assigned a `spdy_ctx`, created with `spdy_ctx_new`.
+  `spdy_ctx_new` receives a `spdy_config` structure, in which the application
+  can set up callback functions.
+
+* When data arrives from the network, `spdy_data` should be called with the
+  buffer and size.  `spdy_data` will indicate how many bytes were consumed, so
+  the application can calculate how many bytes must be kept and passed again
+  later.
+
+* When the library has data to send to the network, the `emit` callback will be
+  called with a buffer and size.
+
+As well as `spdy_ctx`, there is a `spdy_stream` structure, of which there may
+be multiple per `spdy_ctx`.  `spdy_stream` instances are created either by this
+side (with `spdy_stream_open`) or by the remote endpoint (first seen in the
+`on_stream_create` callback).
+
+
 Known issues
 ============
 
