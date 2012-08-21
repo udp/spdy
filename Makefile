@@ -1,5 +1,5 @@
 
-CFLAGS = -ansi -pedantic -Wall
+CFLAGS = -std=c89 -ansi -pedantic -Wall
 
 OBJECTS = spdy_bytes.o spdy_control.o spdy_credential.o spdy_ctx.o \
 		  spdy_goaway.o spdy_headers.o spdy_nv_block.o spdy_ping.o \
