@@ -9,6 +9,7 @@ control frame itself, the version passed to `spdy_ctx_new` will be used (draft
 
 ANSI C, BSD licensed, requires zlib.
 
+[![Build Status](https://secure.travis-ci.org/udp/spdy.png)](http://travis-ci.org/udp/spdy)
 
 Known issues
 ============
