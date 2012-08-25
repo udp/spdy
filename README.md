@@ -1,6 +1,6 @@
 
 I couldn't find an existing C library for SPDY that was suitable for my project,
-so here's my take on one.
+so here's my take on one.  
 
 It supports both draft 2 and draft 3.  If the remote endpoint sends the first
 control frame, it will use whichever version they use.  If sending the first
@@ -30,9 +30,14 @@ For a description of each function/callback, refer to the comments in `spdy.h`.
   called with a buffer and size.
 
 As well as `spdy_ctx`, there is a `spdy_stream` structure, of which there may
-be multiple per `spdy_ctx`.  `spdy_stream` instances are created either by this
-side (with `spdy_stream_open`) or by the remote endpoint (first seen in the
-`on_stream_create` callback).
+be multiple instances per `spdy_ctx`.  `spdy_stream` instances are created
+either by this side (with `spdy_stream_open`) or by the remote endpoint (first
+seen in the `on_stream_create` callback).
+
+To receive incoming headers or data from a `spdy_stream`, set a callback for
+`on_stream_headers` or `on_stream_data`.  To send outgoing headers or data to
+a `spdy_stream`, use the `spdy_stream_write_headers` and `spdy_stream_write_data`
+functions.
 
 
 Known issues
