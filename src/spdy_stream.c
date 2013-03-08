@@ -74,7 +74,7 @@ int spdy_stream_open (spdy_ctx * ctx, spdy_stream ** stream_out,
    }
 
    if ((res = spdy_emit_syn_stream
-            (ctx, frame_flags, stream->id, assoc->id,
+        (ctx, frame_flags, stream->id, assoc == NULL ? 0 : assoc->id,
              priority, cred_slot, num_headers, headers)) != SPDY_E_OK)
    {
       free (stream);
