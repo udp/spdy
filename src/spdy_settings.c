@@ -1,7 +1,7 @@
 
 /* vim: set et ts=3 sw=3 ft=c:
  *
- * Copyright (C) 2012 James McLaughlin et al.  All rights reserved.
+ * Copyright (C) 2012, 2013 James McLaughlin et al.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -72,7 +72,10 @@ int spdy_proc_settings (spdy_ctx * ctx, int8_t flags, spdy_buffer * buffer)
        */
 
       if (entry_id <= last_entry_id)
+      {
+         ++ i;
          continue;
+      }
 
       last_entry_id = entry_id;
 
@@ -86,6 +89,7 @@ int spdy_proc_settings (spdy_ctx * ctx, int8_t flags, spdy_buffer * buffer)
          = entry_flags & FLAG_SETTINGS_PERSIST_VALUE;
 
       ++ num_changed;
+      ++ i;
    }
 
    ctx->config->on_settings_changed
