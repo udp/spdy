@@ -98,7 +98,8 @@ int spdy_proc_goaway (spdy_ctx * ctx, int8_t flags, spdy_buffer * buffer)
          else
             ctx->stream_list = stream->next;
 
-         ctx->config->on_stream_close (ctx, stream, SPDY_STATUS_CANCEL);
+         if (ctx->config->on_stream_close)
+            ctx->config->on_stream_close (ctx, stream, SPDY_STATUS_CANCEL);
 
          spdy_stream_delete (ctx, stream);
       }
@@ -113,8 +114,8 @@ int spdy_proc_goaway (spdy_ctx * ctx, int8_t flags, spdy_buffer * buffer)
    return SPDY_E_OK;
 }
 
-void spdy_emit_goaway
-  (spdy_ctx * ctx, int8_t flags, int32_t last_good_stream_id)
+void spdy_emit_goaway (spdy_ctx * ctx, int8_t flags,
+                       int32_t last_good_stream_id)
 {
    char message [SPDY_CTRL_HEADER_SIZE + 4];
 

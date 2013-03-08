@@ -49,7 +49,8 @@ int spdy_proc_rst_stream (spdy_ctx * ctx, int8_t flags, spdy_buffer * buffer)
 
    status_code = spdy_read_int32 (buffer);
 
-   ctx->config->on_stream_close (ctx, stream, status_code);
+   if (ctx->config->on_stream_close)
+      ctx->config->on_stream_close (ctx, stream, status_code);
 
    spdy_stream_delete (ctx, stream);
 

@@ -31,8 +31,8 @@
 #include "spdy_bytes.h"
 #include "spdy_control.h"
 
-void spdy_build_control_header
-   (spdy_ctx * ctx, char * dest, int type, int8_t flags, size_t size)
+void spdy_build_control_header (spdy_ctx * ctx, char * dest, int type,
+                                int8_t flags, size_t size)
 {
    /* If we don't yet have a version decided and we're sending a control frame,
     * the version passed to spdy_ctx_new is going to have to be the final one.

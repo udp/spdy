@@ -66,7 +66,8 @@ int spdy_proc_headers (spdy_ctx * ctx, int8_t flags, spdy_buffer * buffer)
       return res;
    }
 
-   ctx->config->on_stream_headers (ctx, stream, header_count, headers);
+   if (ctx->config->on_stream_headers)
+      ctx->config->on_stream_headers (ctx, stream, header_count, headers);
 
    return SPDY_E_OK;
 }

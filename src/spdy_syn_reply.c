@@ -90,7 +90,8 @@ int spdy_proc_syn_reply (spdy_ctx * ctx, int8_t flags, spdy_buffer * buffer)
       return res;
    }
 
-   ctx->config->on_stream_create (ctx, stream, num_headers, headers);
+   if (ctx->config->on_stream_create)
+      ctx->config->on_stream_create (ctx, stream, num_headers, headers);
 
    spdy_nv_free (num_headers, headers);
 
