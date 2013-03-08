@@ -231,7 +231,10 @@ int spdy_pack_nv_block (spdy_ctx * ctx, char ** buffer, size_t * deflate_size,
    int res = Z_OK;
 
    if (!(ctx->flags & SPDY_GOT_VERSION))
-        spdy_set_version (ctx, ctx->init_version);
+     {
+       if ((res = spdy_set_version (ctx, ctx->init_version)) != SPDY_E_OK)
+         return res;
+     }
  
    stream = &ctx->zlib_deflate;
 
