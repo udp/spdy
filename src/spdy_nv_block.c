@@ -229,6 +229,9 @@ int spdy_pack_nv_block (spdy_ctx * ctx, char ** buffer, size_t * deflate_size,
    size_t deflate_max;
    char * p;
    int res = Z_OK;
+
+   if (!(ctx->flags & SPDY_GOT_VERSION))
+        spdy_set_version (ctx, ctx->init_version);
  
    stream = &ctx->zlib_deflate;
 
