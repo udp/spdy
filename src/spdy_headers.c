@@ -88,7 +88,7 @@ static int spdy_emit_headers_draft3 (spdy_ctx * ctx, int8_t flags,
    }
 
    spdy_build_control_header
-      (ctx, header, HEADERS, flags, sizeof (header) + nv_size);
+      (ctx, header, HEADERS, flags, sizeof (header) - SPDY_CTRL_HEADER_SIZE + nv_size);
 
    spdy_write_int31 (header + SPDY_CTRL_HEADER_SIZE, stream_id);
 
@@ -116,7 +116,7 @@ static int spdy_emit_headers_draft2 (spdy_ctx * ctx, int8_t flags,
    }
 
    spdy_build_control_header
-      (ctx, header, HEADERS, flags, sizeof (header) + nv_size);
+      (ctx, header, HEADERS, flags, sizeof (header) - SPDY_CTRL_HEADER_SIZE + nv_size);
 
    spdy_write_int31 (header + SPDY_CTRL_HEADER_SIZE, stream_id);
 
