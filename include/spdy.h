@@ -35,6 +35,7 @@ extern "C" {
 #endif
 
 #include <stddef.h>
+#include <sys/uio.h>
 
 typedef int spdy_bool;
 
@@ -180,6 +181,10 @@ typedef struct _spdy_config
     */
 
    void (* emit) (spdy_ctx *, const char * buffer, size_t size);
+
+
+   /* Called to emit a sequence of buffers across the wire */
+   void (* emitv) (spdy_ctx *, const struct iovec *iov, int iovcnt);
 
 
    /* Called when new settings have arrived.  If clear_persisted is non-zero,

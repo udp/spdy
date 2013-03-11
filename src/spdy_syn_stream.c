@@ -164,8 +164,16 @@ int spdy_emit_syn_stream (spdy_ctx * ctx, int8_t flags, int32_t stream_id,
    header [SPDY_CTRL_HEADER_SIZE + 8] = priority << 5;
    header [SPDY_CTRL_HEADER_SIZE + 9] = slot; /* present but not defined in v2 */
 
-   ctx->config->emit (ctx, header, sizeof (header));
-   ctx->config->emit (ctx, nv_buffer, nv_size);
+   if (ctx->config->emitv) {
+     struct iovec io[2] = {
+       {header, sizeof(header)},
+       {nv_buffer, nv_size}
+     };
+     ctx->config->emitv (ctx, io, 2);
+   } else {
+     ctx->config->emit (ctx, header, sizeof (header));
+     ctx->config->emit (ctx, nv_buffer, nv_size);
+   }
 
    free (nv_buffer);
 
