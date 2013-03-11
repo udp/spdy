@@ -121,7 +121,7 @@ int spdy_read_nv_block (spdy_ctx * ctx, spdy_buffer * buffer,
             goto e_inflate;
          }
 
-         pair->name_len = ntohs (name_len_32);
+         pair->name_len = ntohl (name_len_32);
       }
 
       /* Name */
@@ -157,7 +157,7 @@ int spdy_read_nv_block (spdy_ctx * ctx, spdy_buffer * buffer,
             goto e_inflate;
          }
 
-         pair->value_len = ntohs (value_len_32);
+         pair->value_len = ntohl (value_len_32);
       }
 
       /* Value */
