@@ -60,7 +60,7 @@ int spdy_read_nv_block (spdy_ctx * ctx, spdy_buffer * buffer,
                         spdy_nv_pair ** pairs, size_t * count)
 {
    int16_t pair_count_16, name_len_16, value_len_16;
-   int16_t pair_count_32, name_len_32, value_len_32;
+   int32_t pair_count_32, name_len_32, value_len_32;
    z_stream * stream;
    spdy_nv_pair * pair;
    int i = 0;
