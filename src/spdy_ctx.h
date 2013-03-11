@@ -93,6 +93,7 @@ struct _spdy_ctx
 
 int spdy_set_version (spdy_ctx * ctx, int version);
 int spdy_soft_error (spdy_ctx *);
+void spdy_emitv (spdy_ctx *, size_t num, ...);
 
 #endif
 

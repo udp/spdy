@@ -160,6 +160,20 @@ typedef struct _spdy_nv_pair
 } spdy_nv_pair;
 
 
+/* Used in the optional emitv callback to represent each buffer. */
+
+#ifndef _WIN32
+    #include <sys/uio.h>
+    typedef struct iovec spdy_iovec;
+#else
+    typedef struct spdy_iovec
+    {
+       void * iov_base;
+       size_t iov_len;
+    } spdy_iovec;
+#endif
+
+
 typedef struct _spdy_config
 {
    /* Set to non-zero to have this SPDY context act as a server, or zero to
@@ -183,9 +197,14 @@ typedef struct _spdy_config
    void (* emit) (spdy_ctx *, const char * buffer, size_t size);
 
 
-   /* Called to emit a sequence of buffers across the wire */
-   void (* emitv) (spdy_ctx *, const struct iovec *iov, int iovcnt);
+   /* Called to send a sequence of buffers across the wire.
+    *
+    * emitv is an optional callback.  If emitv is not implemented, the library
+    * will simply call emit multiple times.
+    */
 
+   void (* emitv) (spdy_ctx *, size_t num, spdy_iovec *);
+                   
 
    /* Called when new settings have arrived.  If clear_persisted is non-zero,
     * the application must clear any previously persisted settings before

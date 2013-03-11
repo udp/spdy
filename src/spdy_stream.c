@@ -196,17 +196,8 @@ void spdy_stream_write_data
 
          spdy_write_int24 (header + 5, size);
 
-
-         if (ctx->config->emitv) {
-           struct iovec io[2] = {
-             {header, sizeof(header)},
-             {(char*)data, size}
-           };
-           ctx->config->emitv (ctx, io, 2);
-         } else {
-           ctx->config->emit (ctx, header, sizeof (header));
-           ctx->config->emit (ctx, data, size);
-         }
+         spdy_emitv (ctx, 2, header, sizeof(header),
+                             data, size);
 
          total_size -= size;
          data += size;
