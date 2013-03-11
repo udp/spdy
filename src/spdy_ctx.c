@@ -175,6 +175,23 @@ static int spdy_proc_data (spdy_ctx * ctx, spdy_buffer * buffer)
                (ctx, ctx->frame.data.stream, buffer->ptr, data_size);
          }
 
+         if (ctx->frame_flags & SPDY_FLAG_FIN)
+         {
+           stream->flags |= SPDY_STREAM_CLOSED_REMOTE;
+
+           if ((stream->flags & SPDY_STREAM_CLOSED_HERE) &&
+               (stream->flags & SPDY_STREAM_CLOSED_REMOTE))
+             {
+
+               if (ctx->frame.data.stream && ctx->config->on_stream_close)
+               {
+                 ctx->config->on_stream_close(ctx, ctx->frame.data.stream, 0);
+               }
+
+               spdy_stream_delete (ctx, stream);
+             }
+         }
+
          buffer->ptr += data_size;
          buffer->size -= data_size;
 

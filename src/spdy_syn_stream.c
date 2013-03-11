@@ -156,7 +156,7 @@ int spdy_emit_syn_stream (spdy_ctx * ctx, int8_t flags, int32_t stream_id,
    }
 
    spdy_build_control_header
-      (ctx, header, SYN_STREAM, flags, sizeof (header) + nv_size);
+      (ctx, header, SYN_STREAM, flags, sizeof (header) - SPDY_CTRL_HEADER_SIZE + nv_size);
 
    spdy_write_int31 (header + SPDY_CTRL_HEADER_SIZE, stream_id);
    spdy_write_int31 (header + SPDY_CTRL_HEADER_SIZE + 4, assoc_stream_id);
