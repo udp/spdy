@@ -34,7 +34,7 @@
 #include "spdy_zlib.h"
 
 #ifndef _WIN32
-   #include <alloca.h>
+   #include <stdlib.h>
 #else
    #include <malloc.h>
 #endif
